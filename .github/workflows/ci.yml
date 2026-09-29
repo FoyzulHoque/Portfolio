@@ -19,6 +19,11 @@ jobs:
       - name: Content, syntax and secret checks
         run: node scripts/check.js
 
+      - name: Failover script logic
+        run: |
+          node scripts/test-failover.js
+          node scripts/test-worker.mjs
+
       - name: Shell scripts parse
         run: |
           for f in deploy/*.sh; do bash -n "$f"; done
@@ -38,4 +43,7 @@ jobs:
           for u in / /js/content.js /assets/profile.png; do
             curl -sI "http://localhost:8080$u" | grep -qi '^x-content-type-options: nosniff' || { echo "missing security headers on $u"; exit 1; }
           done
+          # failover probe: exact body and CORS for the GitHub Pages origin
+          test "$(curl -s http://localhost:8080/health)" = "ok"
+          curl -sI http://localhost:8080/health | grep -qi '^access-control-allow-origin: https://foyzulhoque.github.io'
           docker rm -f portfolio-test

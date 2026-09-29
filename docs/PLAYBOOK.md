@@ -73,7 +73,11 @@ Run database migrations as a deliberate step, not blindly on every deploy.
 deploy key on the server first. Builds run on the laptop; for heavy backends, later build images in GitHub Actions
 and let the server only pull them.
 
-## 4. Useful commands (on the server)
+## 4. If the server goes down
+The site fails over to the GitHub Pages copy automatically once the Cloudflare Worker is set up (see `FAILOVER.md`),
+and returns to the homelab by itself when it is healthy again.
+
+## 5. Useful commands (on the server)
 | Need | Command |
 |---|---|
 | All containers | `docker ps` |

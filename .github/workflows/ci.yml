@@ -43,6 +43,8 @@ jobs:
           for u in / /js/content.js /assets/profile.png; do
             curl -sI "http://localhost:8080$u" | grep -qi '^x-content-type-options: nosniff' || { echo "missing security headers on $u"; exit 1; }
           done
+          # edits to css/js must show up right away: no long-lived caching
+          curl -sI http://localhost:8080/js/content.js | grep -qi '^cache-control: no-cache'
           # failover probe: exact body and CORS for the GitHub Pages origin
           test "$(curl -s http://localhost:8080/health)" = "ok"
           curl -sI http://localhost:8080/health | grep -qi '^access-control-allow-origin: https://foyzulhoque.github.io'

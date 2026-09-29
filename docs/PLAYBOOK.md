@@ -11,6 +11,10 @@ edit → branch → push → pull request → ci green → merge → live in ~1 
 3. Push the branch, open a pull request, wait for `ci`, merge.
 4. Watch the deploy on the server: `journalctl -u portfolio-deploy -f`.
 
+**Caching:** text, design and script edits (`content.js`, `app.js`, `style.css`, `index.html`) show up immediately after the deploy.
+If you replace an image, certificate or CV **under the same file name**, it can stay cached up to ~4 hours: in Cloudflare open
+**Caching → Configuration → Purge Everything** to refresh it instantly (or give the new file a new name).
+
 Undo a bad release: revert the pull request on GitHub; the server redeploys the previous version.
 The server also rolls back by itself when the new container is unhealthy.
 GitHub Pages has no CI gate, so protect `main` (require the `ci` check + a pull request).

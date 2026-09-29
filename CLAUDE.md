@@ -18,15 +18,17 @@ Hosted on the owner's homelab behind Caddy, auto-deployed from `main`. See `docs
 ```
 index.html            shell (nav, mode switch, lightbox); content is rendered by JS
 js/content.js         ALL text/links/dates/projects/certificates  <- edit this for content changes
+js/failover.js        on *.github.io only: redirect to the main domain when the homelab is up
 js/app.js             renders sections per mode, GitHub streak fetch, lightbox, interactions
 css/style.css         tokens (top of file) + materials (glass/neu/clay) + per-mode overrides
 assets/               profile.png, favicon.svg, certs/, letters/, cv/
 Dockerfile, compose.yml, .dockerignore     container that serves the site (nginx)
-deploy/               nginx.conf, security-headers.conf, deploy.sh (generic engine), systemd units, server-setup.sh, add-app.sh
+deploy/               cloudflare-failover-worker.js, nginx.conf, security-headers.conf, deploy.sh (generic engine), systemd units, server-setup.sh, add-app.sh
 scripts/check.js      content + secret checks (runs in CI)
 .github/workflows/ci.yml
 docs/SERVER.md        how the server hosts and deploys this
 docs/PLAYBOOK.md      day-to-day: update, maintain, host more apps (add-app.sh)
+docs/FAILOVER.md      GitHub Pages as automatic backup for the main domain (Cloudflare Worker)
 images/ ss/ videos/   OLD files from the previous site, not used, excluded from the image
 ```
 

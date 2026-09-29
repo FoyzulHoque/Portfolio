@@ -28,10 +28,10 @@ jobs:
 
       - name: Container serves the site
         run: |
-          docker run -d --name t -p 8080:80 portfolio:ci
+          docker run -d --name portfolio-test -p 8080:80 portfolio:ci
           for i in $(seq 1 20); do curl -fsS http://localhost:8080/ >/dev/null && break || sleep 1; done
           curl -fsS http://localhost:8080/ | grep -q "Foyzul Hoque"
           curl -fsS -o /dev/null http://localhost:8080/js/content.js
           curl -fsS -o /dev/null http://localhost:8080/assets/cv/Foyzul_Hoque_Academic_CV.pdf
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/.env)" != 200
-          docker rm -f t
+          docker rm -f portfolio-test

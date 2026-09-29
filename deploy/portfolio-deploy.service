@@ -1,0 +1,10 @@
+[Unit]
+Description=Deploy portfolio from GitHub (main)
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+SupplementaryGroups=docker
+ExecStart=/usr/bin/bash /srv/apps/portfolio/deploy/deploy.sh

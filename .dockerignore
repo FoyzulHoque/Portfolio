@@ -1,0 +1,14 @@
+.git
+.github
+.gitignore
+.env*
+deploy
+scripts
+README.md
+compose.yml
+Dockerfile
+# old files that are not part of the site
+images
+ss
+videos
+cse309.code-workspace

@@ -1,0 +1,12 @@
+# Joins the existing "web" network so Caddy can reach it as portfolio:80.
+# No ports are published: the only public entry point is Caddy.
+services:
+  portfolio:
+    build: .
+    container_name: portfolio
+    restart: unless-stopped
+    networks: [web]
+
+networks:
+  web:
+    external: true

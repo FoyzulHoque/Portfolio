@@ -1,167 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-mode="academic" data-theme="light">
 <head>
-    <script src="https://kit.fontawesome.com/0dd31344f7.js" crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link  rel="stylesheet" type="text/css" href="cvstyle.css">
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foyzul Hoque · Portfolio</title>
+  <meta name="description" content="Foyzul Hoque — AI researcher and Flutter mobile engineer. Switch between the academic and industry view.">
+  <meta name="theme-color" content="#eef0f6">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    /* Apply saved mode/theme before first paint (no flash). ?mode=industry in the URL wins. */
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search).get('mode');
+        var m = q === 'industry' || q === 'academic' ? q : localStorage.getItem('mode');
+        var t = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (m === 'industry' || m === 'academic') document.documentElement.dataset.mode = m;
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
-                              <!---top--->
-    <div class="top">
-        
-        <nav>
-            <h3 class="logo"> <img src="https://blog.flamingtext.com/blog/2023/03/09/flamingtext_com_1678348871_418711000.png"  > </h3>
-            <ul>
-                <li><a href="#">Home </a></li>
-                <li><a href="#1">Education </a></li>
-                <li><a href="#2">Research </a></li>
-                <li><a href="#3">Skills </a></li>
-                <li><a href="#4">Experience </a></li>
-                <li><a href="#5">Projects </a></li>
-                <li><a href="#6">ECA </a></li>
-            </ul>
-            <a href="#7" class="button">Contact</a>
-        </nav>
-        <!---personal details--->
-        <div class="aboutcontainer">
-            <h2>Hello I am<h1> FOYZUL HOQUE</h1></h2>
-            <p>I am Currently a final year student in Independent University Bangladesh.
-            <br> I belong from CSE Department. I love playing games and i am a tech freak.</p> 
-        </div>
-        <div class="me">
-            <img src="images/Shape.png" class="shape">
-            <img src="images/photo2.png" height=20px class="myself">
+  <a class="skip" href="#app">Skip to content</a>
 
-        </div>
+  <!-- Spatial background: slow floating colour orbs -->
+  <div class="bg" aria-hidden="true">
+    <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+  </div>
+
+  <header class="nav glass" id="nav">
+    <a class="brand" href="#top" aria-label="Foyzul Hoque, home"><span class="brand-mark">FH</span><span class="brand-name">Foyzul Hoque</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections"></nav>
+    <div class="nav-tools">
+      <div class="switch" role="tablist" aria-label="Portfolio mode" id="modeSwitch">
+        <span class="switch-thumb" aria-hidden="true"></span>
+        <button role="tab" data-mode="academic">Academic</button>
+        <button role="tab" data-mode="industry">Industry</button>
+      </div>
+      <button class="theme-btn neu" id="themeBtn" aria-label="Toggle dark mode"><span aria-hidden="true"></span></button>
     </div>
-    <!--education details-->
-<section id="1">
-    <section class="edu">
-        <hr size="10" width="100%" color="black">
-        <div class="details">
-        <h1>Education</h1><br>
-        <h3>Undergradute:</h3><br>
-        <p><strong>B.Sc. in Computer Science & Engineering CSE (2019 - present )<br>Independent University Bangladesh IUB</strong></p><br> 
-        <h3>A-Level:</h3><br>
-        <p><strong>Willes Little Flower School & college - 2020</strong></p><br>
-        <h3>O-Level:</h3><br>
-        <p><strong>Willes Little Flower School & college - 2016</strong></p>    
-        </div>
-    </section>
-</section>
-    <!--research-->
-<section id="2">
-    <hr size="10" width="100%" color="black">
-    <section class="research">
-        <div class="researchbox">
-        <h1>My Research</h1><br>
-        <p>I am working on NS3 with Md Fahad Monir sir, which is still <br>a work in progress.</p><Br>
-        <video class="window" width=500px height=300 autoplay muted>
-            <source src="videos/loading.mkv" type="video/mp4">
-           Your browser does not support the video tag.
-        </video>
-    </div>
-    </section>
-</section>
+  </header>
 
-     <!--skills-->
-<section id="3">
-     <hr size="10" width="100%" color="black">
-    <section class="skill">
-     <div class="sdetail">
-        <h1>Skills</h1><br>
-        <ul>
-            <li><strong>Technical skills:</strong> HTML, CSS ,C++ </li><br>
-            <li><strong>Designing:</strong> Adobe XD </li><br>
-            <li><strong>Networking:</strong> Computer Network (Intermediate)</li><br>
-        </ul>
-        <h3>Language</h3><br>
-        <ul>
-            <li>English</li>
-            <li>Bangla</li>
-            <li>French</li>
-            <li>Hindi(Verbal)</li>
-        </ul>
-     </div>
-    </section>
-</section>
-    <!--Expericence-->
-<section id="4">
-    <hr size="10" width="100%" color="black">
-    <section class="exp">
-        <div class="expdetails">
-            <h1>Experience</h1><br>
-            <h3>Research Assistant</h3><br>
-            <p><strong>Working with Computer Netwroks</strong> : September,2022 - PRESENT</p><br>
-            <h3>HUAWEI Training</h3><br>
-            <p><strong>The future of Mobile App Industry</strong></p>
-            <br><h3>self-employed</h3><br>
-            <p></p><strong>Owner of a Desset shop</strong> : JULY,2022 - PRESENT</p>
-        </div>
+  <main id="app"></main>
 
-    </section>
-</section>   
-     <!--project-->
-<section id="5">
-    <hr size="10" width="100%" color="black">
-    <section class="pro">
-        <div class="prodetails">
-            <h1>Academic Projects</h1><br>
-            <h3>Electronis-2</h3>
-            <strong>Maze Solver</strong>
-            <p>Made a robot that can run by itself after powering on, it is able to move forward and change direction on its own sensing obstacle.</p><br>
-            <h3>Obejct Oriented Programming</h3>
-            <strong>Progoti Industries</strong>
-            <p>a prototype of selling vehicles was build with netbeans and scenebuilder, after making UML and DATA flow diagram</p><br>
-            <h3>Microprocessor</h3>
-            <strong>Solar Powered Water Cleaning Robot </strong>
-            <p>On going project</p> 
+  <dialog class="lightbox" id="lightbox" aria-label="Document viewer"><form method="dialog"><button class="lb-close" aria-label="Close">✕</button></form>
+    <img id="lbImg" alt="" draggable="false"><p id="lbCap"></p></dialog>
 
-        </div>
-</section >
-<section id="6">
-    <!--extra ciricular activity-->
-    <hr size="10" width="100%" color="black">
-    <section class="eta">
-        <div class="etadetail">
-            <h1>Extra Ciricular Activity</h1><br>
-            <h3>Volunteering</h3><br>
-            <strong> IUB-DOSA</strong>
-            <p>workred as logistic and management for club carnival - 2019</p><br>
-            <strong>Korean club</strong>
-            <p>organizing korean Fest</p><br>
-            <strong>Question MindMap (QMM) </strong>
-            <p>Preparing the workshop : " Developing an Engineering Thinking Mindset " </p>
-        </div>
-    </section>
-</section>
-     <!--  footer -->
-<section id="7"> 
-     <hr size="10" width="100%" color="black">
-     <footer class="contactfooter">
-        <div class="footercontainer">
-         
-              <h3>Contact</h3><br>
-              <ul class="footer-links">
-                <li><a href="">foyzul.aman@gmail.com</a></li><br>
-                <li><a href="">01713490790</a></li><br>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-linkedin"></i>
-                <i class="fa-brands fa-whatsapp"></i>
-                <i class="fa-brands fa-twitter"></i>
-                <p>Copyright &copy; 2023 All Rights Reserved by 
-                    <a href="#">Foyzul Hoque</a>    
-                </p> 
-        </div>      
+  <footer class="footer">
+    <p>© <span id="year"></span> Foyzul Hoque · Dhaka, Bangladesh</p>
   </footer>
-</section>
 
-
+  <script src="js/content.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
-
-

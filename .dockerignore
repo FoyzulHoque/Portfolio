@@ -5,6 +5,7 @@
 # keep only the nginx config from deploy/
 deploy/*
 !deploy/nginx.conf
+!deploy/security-headers.conf
 scripts
 README.md
 compose.yml

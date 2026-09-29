@@ -22,10 +22,11 @@ js/app.js             renders sections per mode, GitHub streak fetch, lightbox, 
 css/style.css         tokens (top of file) + materials (glass/neu/clay) + per-mode overrides
 assets/               profile.png, favicon.svg, certs/, letters/, cv/
 Dockerfile, compose.yml, .dockerignore     container that serves the site (nginx)
-deploy/               nginx.conf, deploy.sh, systemd unit + timer, server-setup.sh
+deploy/               nginx.conf, security-headers.conf, deploy.sh (generic engine), systemd units, server-setup.sh, add-app.sh
 scripts/check.js      content + secret checks (runs in CI)
 .github/workflows/ci.yml
 docs/SERVER.md        how the server hosts and deploys this
+docs/PLAYBOOK.md      day-to-day: update, maintain, host more apps (add-app.sh)
 images/ ss/ videos/   OLD files from the previous site, not used, excluded from the image
 ```
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Deploy app "%i" from GitHub
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+SupplementaryGroups=docker
+EnvironmentFile=/etc/homelab-deploy/%i.env
+ExecStart=/usr/bin/bash /srv/apps/portfolio/deploy/deploy.sh

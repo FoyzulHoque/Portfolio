@@ -2,7 +2,9 @@
 .github
 .gitignore
 .env*
-deploy
+# keep only the nginx config from deploy/
+deploy/*
+!deploy/nginx.conf
 scripts
 README.md
 compose.yml

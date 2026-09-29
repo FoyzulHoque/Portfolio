@@ -100,9 +100,9 @@ The timer would redeploy `main` on the next tick, so also revert the bad change 
 - Recommended GitHub setting: protect `main` (pull request + `ci` check required), because a merge is a production deploy.
 
 ## 9. Adding another app the same way
-Give it its own folder in `/srv/apps/<name>/`, its own `compose.yml` joining the `web` network without publishing ports,
-add a site block to the Caddyfile (`reverse_proxy <container>:<port>`), reload Caddy, and add DNS if it needs a new subdomain.
-Databases stay on a private Docker network and are never exposed.
+Run `deploy/add-app.sh <name> <owner/repo>` on the server; it wires up the clone, settings and per-app deploy timer.
+Then add secrets, DNS and a Caddy block by hand. Full steps and a compose template with a private database are in
+[`PLAYBOOK.md`](PLAYBOOK.md). The deploy engine is generic: `deploy.sh` reads `NAME`, `REPO`, `APP_DIR`, `BRANCH`, `REQUIRE_CI`.
 
 ## 10. Not done yet
 Dynamic DNS · automated backups (one disk is not a backup) · monitoring/alerts · SSH hardening / VPN · Cloudflare proxy.

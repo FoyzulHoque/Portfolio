@@ -34,4 +34,8 @@ jobs:
           curl -fsS -o /dev/null http://localhost:8080/js/content.js
           curl -fsS -o /dev/null http://localhost:8080/assets/cv/Foyzul_Hoque_Academic_CV.pdf
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/.env)" != 200
+          # security headers must be present on the page and on static files
+          for u in / /js/content.js /assets/profile.png; do
+            curl -sI "http://localhost:8080$u" | grep -qi '^x-content-type-options: nosniff' || { echo "missing security headers on $u"; exit 1; }
+          done
           docker rm -f portfolio-test

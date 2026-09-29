@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
-# Runs ON THE SERVER every minute (systemd timer). Deploys origin/main when GitHub CI is green.
+# Runs ON THE SERVER every minute (systemd timer). Deploys origin/<branch> when GitHub CI is green.
 # Pull model: the server only makes outbound requests, no inbound port or SSH key is needed.
+#
+# Generic engine: one copy serves every app. Settings come from the environment:
+#   NAME (default portfolio)  REPO (owner/repo)  APP_DIR  BRANCH (main)  REQUIRE_CI (1)
+# The portfolio timer uses the defaults; other apps get their values from /etc/homelab-deploy/<name>.env
+# (see add-app.sh and app-deploy@.service).
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/srv/apps/portfolio}"
+NAME="${NAME:-portfolio}"
+APP_DIR="${APP_DIR:-/srv/apps/$NAME}"
 REPO="${REPO:-FoyzulHoque/Portfolio}"
 BRANCH="${BRANCH:-main}"
-REQUIRE_CI="${REQUIRE_CI:-1}"          # set to 0 to deploy without waiting for CI
+REQUIRE_CI="${REQUIRE_CI:-1}"          # set to 0 for repos without a CI workflow
 
-log() { echo "[deploy] $*"; }
+log() { echo "[deploy:$NAME] $*"; }
 
 ci_state() {   # prints: ok | pending | failed
   local runs
@@ -20,19 +26,28 @@ ci_state() {   # prints: ok | pending | failed
   echo ok
 }
 
+# Every container of the compose project must be running, and healthy if it defines a healthcheck.
 wait_healthy() {
-  local s
+  local ids id st hs ok
   for _ in $(seq 1 30); do
-    s=$(docker inspect -f '{{.State.Health.Status}}' portfolio 2>/dev/null || echo none)
-    [ "$s" = healthy ] && return 0
+    ok=1
+    ids=$(docker compose ps -q)
+    [ -n "$ids" ] || ok=0
+    for id in $ids; do
+      st=$(docker inspect -f '{{.State.Status}}' "$id")
+      hs=$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{end}}' "$id")
+      [ "$st" = running ] || ok=0
+      [ -z "$hs" ] || [ "$hs" = healthy ] || ok=0
+    done
+    [ "$ok" = 1 ] && return 0
     sleep 2
   done
   return 1
 }
 
 main() {
-  exec 9>/tmp/portfolio-deploy.lock
-  flock -n 9 || exit 0                       # another deploy is running
+  exec 9>"/tmp/deploy-$NAME.lock"
+  flock -n 9 || exit 0                       # another deploy of this app is running
   cd "$APP_DIR"
 
   git fetch --quiet origin "$BRANCH"
@@ -45,7 +60,7 @@ main() {
     case "$(ci_state "$latest")" in
       pending) log "waiting for CI on ${latest:0:7}"; exit 0 ;;
       failed)
-        if [ ! -e "/tmp/portfolio-deploy.skip-$latest" ]; then log "CI failed on ${latest:0:7}, not deploying"; touch "/tmp/portfolio-deploy.skip-$latest"; fi
+        if [ ! -e "/tmp/deploy-$NAME.skip-$latest" ]; then log "CI failed on ${latest:0:7}, not deploying"; touch "/tmp/deploy-$NAME.skip-$latest"; fi
         exit 0 ;;
     esac
   fi

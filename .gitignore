@@ -1,0 +1,15 @@
+# secrets / local config - never commit these
+.env
+.env.*
+*.pem
+*.key
+# tooling / OS noise
+.playwright-mcp/
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db
+node_modules/
+
+# private operator notes (host, user, paths)
+CLAUDE.local.md
